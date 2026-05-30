@@ -90,15 +90,9 @@ function nextHeroSlide() {
   heroIndex = (heroIndex + 1) % heroSlides.length;
   showHeroSlide(heroIndex);
 }
+
 showHeroSlide(heroIndex);
 setInterval(nextHeroSlide, 5000);
-
-// ========== ABOUT FOUNDER PROFILE LOAD ========== //
-fetch('profile/NandiniKumarProfile')
-  .then(res => res.text())
-  .then(text => {
-    document.getElementById('about-profile').textContent = text;
-  });
 
 // ========== GALLERY DATA ========== //
 const galleries = {
