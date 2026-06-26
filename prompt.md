@@ -1,451 +1,743 @@
-Build a complete, production-quality single-page portfolio website for "Nandini Kumar".
+# GPT-4.1 Coding Agent Prompt
 
-## Project Structure
+You are a Staff+ Frontend Engineer and UI/UX expert.
 
-The website files must be created in the current directory:
+Build a production-quality portfolio website for **Nandini Kumar**.
 
-* index.html
-* style.css
-* script.js
+The website should feel like a luxury fashion brand rather than a traditional portfolio.
 
-The content and media already exist in the following locations:
-
-media/artistiquetale/
-media/exportandfair/
-media/nkfaagency/
-
-Profile text file:
-
-profile/NandiniKumarProfile
-
-The website must automatically use the images found in these directories.
+The design language should be inspired by high-end fashion editorials, luxury wedding brands, premium design studios, and boutique creative agencies.
 
 ---
 
-## Overall Design Philosophy
+# Overall Theme
 
-This is NOT a corporate website.
+Use the uploaded **theme.jpg** as the single source of inspiration.
 
-This is an elegant editorial-style personal portfolio showcasing the journey, work, vision, and impact of Nandini Kumar.
+The mood is:
 
-The design should feel like:
-
-* A premium coffee-table book
-* A luxury editorial magazine
-* An art and fashion portfolio
+- Calm
+- Sophisticated
+- Editorial
+- Minimal
+- Warm
+- Elegant
+- Spacious
+- Premium
+- Timeless
+- Luxury
 
 Avoid:
 
-* Corporate layouts
-* Startup aesthetics
-* Heavy animations
-* Flashy effects
-* Dark themes
-* Generic template styling
+- Bright colors
+- Loud gradients
+- Heavy shadows
+- Tech startup aesthetics
+- Glassmorphism
+- Neon
+- Rounded playful cards
+- Material UI look
+- Bootstrap look
 
-The website should be:
-
-* Minimal
-* Elegant
-* Sophisticated
-* Calm
-* Image-focused
-* Responsive
-* Easy to navigate
-
-Photography should be the primary visual element.
+Everything should feel handcrafted.
 
 ---
 
-## Color Palette
+# Color Palette
 
-Use the following palette throughout:
+Extract and consistently use the colors from theme.jpg.
 
-Primary Accent:
-rgba(99,84,66)
+Primary background:
 
-Secondary Accent:
-rgba(77,64,47)
+RGB(149,129,118)
 
-Text:
-rgba(34,17,5)
+Approx Hex:
 
-Supporting Text:
-rgba(64,49,34)
+`#958176`
 
-Background:
-#F8F5F1
+Secondary background:
 
-Dividers:
-rgba(99,84,66,0.15)
+RGB(224,201,168)
 
-Avoid strong or saturated colors.
+Approx Hex:
+
+`#E0C9A8`
+
+Primary text:
+
+RGB(255,255,255)
+
+Secondary text:
+
+RGB(245,241,236)
+
+Dark text:
+
+RGB(35,35,35)
+
+Muted text:
+
+RGB(130,130,130)
+
+Accent:
+
+Use the warm beige from the image.
+
+No saturated accent colors.
 
 ---
 
-## Typography
+# Typography
 
-Headings:
-Playfair Display (Google Font)
+Use elegant typography.
+
+Heading:
+
+Playfair Display
 
 Body:
-Inter (Google Font)
 
-Use generous spacing and strong visual hierarchy.
+Inter
 
----
+or
 
-## Navigation Bar
+Manrope
 
-Create a sticky navigation bar.
+Large typography.
 
-Menu items:
+Generous spacing.
 
-HOME
-
-ABOUT FOUNDER
-
-MY JOURNEY
-- Artistiquetale
-- Export & Fair
-- NKFA Agency
-
-SERVICES
-
-CONTACT
-
-Requirements:
-
-* Smooth scrolling
-* Sticky navbar
-* Active section highlighting
-* Transparent navbar at top
-* Soft background after scrolling
-* Mobile responsive hamburger menu
-
-The dropdown items should scroll directly to their corresponding subsections.
+Luxury editorial feel.
 
 ---
 
-# SECTION 1: HOME
+# Website Structure
 
-Full-screen hero section.
+The website has **3 pages**.
+
+- Home
+- About
+- ArtistiqueTale
+- NKFA
+
+Navigation should exist on every page.
+
+---
+
+# Navbar
+
+Transparent initially.
+
+Turns solid after scrolling.
 
 Height:
-100vh
 
-Background:
+72px
 
-Create a slow crossfade slideshow using the first 5 images from:
+Layout:
 
-media/exportandfair/
+Left:
 
-Requirements:
+- logo from
 
-* Smooth fade transition
-* Approximately 5 seconds per image
-* Gentle zoom effect
-* No controls
-* No indicators
-* Dark overlay for readability
+```
+media/logo.png
+```
 
-Hero Content:
+- Nandini Kumar
 
-Nandini Kumar
+Right:
 
-Director • Entrepreneur • Mentor • Fashion & Style Expert
+- About
+- ArtistiqueTale
+- NKFA
+- Services
+- Contact
 
-A journey of creativity, craftsmanship, mentorship, and cultural impact.
+Desktop:
 
-Add a subtle:
+Horizontal navbar.
 
-Explore ↓
+Mobile:
 
-indicator at the bottom.
+Hamburger.
+
+Sticky navigation.
+
+Smooth transitions.
 
 ---
 
-# SECTION 2: ABOUT FOUNDER
+# Global Layout
 
-Load and use content from:
+Every page should have:
 
-profile/NandiniKumarProfile
+Large margins.
 
-Create a beautifully formatted editorial section.
+Maximum width:
 
-Structure:
+1400px
+
+Centered content.
+
+Section spacing:
+
+120px+
+
+Whitespace is important.
+
+Every section ends with a small downward arrow centered horizontally.
+
+Clicking the arrow smoothly scrolls to the next section.
+
+Arrow should animate gently.
+
+---
+
+# Animations
+
+Use Framer Motion.
+
+Animations should be subtle.
+
+Examples:
+
+- fade up
+- fade in
+- slight image reveal
+- parallax
+- smooth hover zoom
+- text reveal
+
+No flashy animations.
+
+---
+
+# Images
+
+Never hardcode image names.
+
+Automatically load every image inside each directory.
+
+Example:
+
+```
+media/About/
+```
+
+should automatically populate the gallery.
+
+Same for:
+
+```
+media/HeroBanner/
+media/ArtistiqueTale/
+media/NKFA/
+```
+
+---
+
+# Text Files
+
+Load section descriptions from:
+
+```
+text/HeroBanner.txt
+text/About.txt
+text/ArtistiqueTale.txt
+text/NKFA.txt
+```
+
+Do NOT hardcode text.
+
+---
+
+# HOME PAGE
+
+The homepage contains these sections:
+
+1 Hero Banner
+
+2 About
+
+3 ArtistiqueTale
+
+4 NKFA
+
+5 Services
+
+6 Contact
+
+Every section occupies almost the full viewport.
+
+---
+
+# Hero Banner
+
+Images:
+
+```
+media/HeroBanner/
+```
+
+Use a cinematic slideshow.
+
+Crossfade.
+
+Ken Burns effect.
+
+Large full-screen imagery.
+
+Overlay with a subtle warm tint.
+
+Center aligned text:
+
+Entrepreneur • Fashion Visionary • Creative Director • Cultural Advocate • Mentor
+
+Large typography.
+
+Elegant entrance animation.
+
+CTA:
+
+Explore Journey
+
+Scroll Indicator
+
+---
+
+# About Section
+
+Layout:
+
+Left:
+
+A vertical stack of overlapping editorial images.
+
+Use only a few representative images.
+
+Right:
+
+Load text from:
+
+```
+text/About.txt
+```
+
+Headline:
+
+About
+
+Editorial magazine layout.
+
+---
+
+# ArtistiqueTale Section
+
+Same visual language.
+
+Left:
+
+Layered images.
+
+Right:
+
+Text from:
+
+```
+text/ArtistiqueTale.txt
+```
+
+Button:
+
+Explore Collection
+
+Links to ArtistiqueTale page.
+
+---
+
+# NKFA Section
+
+Same layout.
+
+Images left.
+
+Text right.
+
+Button:
+
+Explore NKFA
+
+Links to NKFA page.
+
+---
+
+# Services Section
+
+Large elegant typography.
+
+Use editorial layout.
 
 Title:
-About Founder
 
-Subheading:
-Nandini Kumar
+Wedding Curation Experience
 
-Display:
+Subtitle:
 
-Director • Entrepreneur • Mentor • Fashion & Style Expert
+By Nandini Kumar
 
-Create a highlights block:
+Introduction:
 
-* 25+ Years Experience
-* Fashion & Styling
-* Media & Entertainment
-* Mentorship
-* Entrepreneurship
-* Cultural Advocacy
+Where timeless tradition meets modern luxury.
 
-Then display the profile story in readable editorial formatting.
+Display the provided content beautifully.
 
-Create a highlighted quote block using:
+Instead of bullet lists, create elegant service cards.
 
-"Passion, willpower, and resilience continue to define Nandini Kumar’s journey."
+Service Groups:
 
-Use elegant typography and generous whitespace.
+## Signature Wedding Curation Services
 
----
-
-# SECTION 3: MY JOURNEY
-
-This is the largest section of the website.
-
-Create three subsections.
-
-Use large editorial section titles.
-
-Each subsection should include:
-
-* Introduction text
-* Image gallery
-
-The gallery should use:
-
-* Masonry layout
-* Responsive design
-* Original image aspect ratios
-* Lazy loading
-* Lightbox view when clicked
+- Bridal Styling
+- The Groom Edit
+- Couple Styling
+- Family Styling
+- Personal Colour Analysis
+- Bridal Shopping Assistance
+- Luxury Sourcing
+- Shopping Strategy
+- Jewellery & Accessory Integration
+- Online Wedding Consultations
 
 ---
 
-## Artistiquetale
+## Luxury Bridal & NRI Trousseau Services
 
-Use this introduction:
-
-Artistiquetale is a celebration of conscious living through thoughtfully curated furnishings, décor, and artistic expressions. Blending sustainability, craftsmanship, and timeless design, it creates spaces that are elegant, meaningful, and deeply personal.
-
-Load all images from:
-
-media/artistiquetale/
+- Luxury bridal styling
+- Bespoke trousseau curation
+- Capsule Wedding Wardrobe
+- Destination Wedding Support
+- Luxury Virtual Styling
 
 ---
 
-## Export & Fair
+## NKFA Bridal Trousseau Clarity Session
 
-Use this introduction:
-
-Export & Fair represents a commitment to bringing thoughtfully curated products, craftsmanship, and creative collaborations to broader markets. Focused on quality, authenticity, and meaningful partnerships, the initiative serves as a bridge between design, culture, and global opportunities.
-
-Load all images from:
-
-media/exportandfair/
-
----
-
-## NKFA Agency
-
-Use this introduction:
-
-NKFA Agency is dedicated to nurturing emerging talent and building meaningful pathways into the fashion, media, and creative industries. Through mentorship, industry exposure, and practical guidance, it empowers individuals to transform ambition into impactful careers.
-
-Load all images from:
-
-media/nkfaagency/
-
----
-
-# SECTION 4: SERVICES
-
-Title:
-Services
-
-Content:
-
-Coming Soon
-
-Curated offerings and collaborations will be featured here.
-
-Design as an elegant placeholder section.
-
----
-
-# SECTION 5: CONTACT
-
-Title:
-Contact
-
-Content:
-
-Connect with Nandini Kumar
-
-Create elegant placeholder buttons:
-
-Instagram
-LinkedIn
-Facebook
-
-Display:
-
-Links coming soon.
-
-Also add:
-
-For collaborations and professional inquiries, contact details will be added soon.
-
----
-
-## Animations
-
-Use only subtle animations:
-
-* Fade-in on scroll
-* Gentle image hover effects
-* Smooth scrolling
-* Soft transitions
-
-Avoid:
-
-* Bounce effects
-* Flashy animations
-* Excessive motion
-
----
-
-## Accessibility
+Show in a highlighted luxury panel.
 
 Include:
 
-* Semantic HTML
-* ARIA labels
-* Keyboard navigation
-* Alt text support
-* High readability
+- 45 minute consultation
+- Wardrobe mapping
+- Styling direction
+- Expert guidance
+
+Investment:
+
+Price on request
+
+Primary CTA:
+
+Book A Consultation
 
 ---
 
-## Performance
+# Consultation Form
 
-Requirements:
+Elegant minimal form.
 
-* Lazy load gallery images
-* Optimize rendering
-* Avoid heavy frameworks
-* Use vanilla HTML, CSS, and JavaScript only
+Fields:
 
-Do not use React, Vue, Angular, or any build process.
+Bride Name
 
-The final output must be a working static website consisting of:
+Groom Name
 
-* index.html
-* style.css
-* script.js
+Wedding Date
 
-located in the current directory.
+Residence
 
-## Image Assets
+Phone
 
-Use the following exact image files.
+Email
 
-### Hero Slideshow Images
+Instagram
 
-Use these images in the HOME section background slideshow:
+Wedding Location
 
-* media/exportandfair/expo1.jpg
-* media/exportandfair/expo2.jpg
-* media/exportandfair/expo3.jpg
-* media/exportandfair/fair.jpg
-* media/exportandfair/office1.jpg
+Wedding Type
 
-Create a smooth crossfade transition between these images.
+Checkboxes:
 
----
+- Intimate Wedding
+- Destination Wedding
+- Traditional Wedding
+- Luxury Wedding
+- NRI Wedding
+- Multi-City Celebrations
 
-### Artistiquetale Gallery
+Consultation Mode
 
-Load all images:
+Radio buttons:
 
-* media/artistiquetale/act1.jpeg
-* media/artistiquetale/act2.jpg
-* media/artistiquetale/act3.jpg
-* media/artistiquetale/act4.jpg
-* media/artistiquetale/act5.JPG
-* media/artistiquetale/act6.JPG
-* media/artistiquetale/act7.JPG
-* media/artistiquetale/act8.JPG
-* media/artistiquetale/act9.JPG
-* media/artistiquetale/article1.jpg
-* media/artistiquetale/article2.jpg
-* media/artistiquetale/article3.jpg
-* media/artistiquetale/article4.jpg
-* media/artistiquetale/article5.jpg
+- In Person
+- Video
+- Phone
 
-Display in an elegant masonry layout.
+Preferred Date
+
+Preferred Time
+
+Large submit button.
+
+No backend required.
+
+Mock submit.
 
 ---
 
-### Export & Fair Gallery
+# Contact Section
 
-Load all images:
+Minimal.
 
-* media/exportandfair/expo1.jpg
-* media/exportandfair/expo2.jpg
-* media/exportandfair/expo3.jpg
-* media/exportandfair/fair.jpg
-* media/exportandfair/office1.jpg
-* media/exportandfair/office2.jpg
-* media/exportandfair/office3.jpg
-* media/exportandfair/office4.jpg
-* media/exportandfair/office5.jpg
-* media/exportandfair/office6.jpg
+Elegant.
 
-Display in an elegant masonry layout.
+Placeholder content.
 
----
+Email
 
-### NKFA Agency Gallery
+Phone
 
-Load all images:
+WhatsApp
 
-* media/nkfaagency/1.jpg
-* media/nkfaagency/2.JPG
-* media/nkfaagency/3.jpg
-* media/nkfaagency/4.png
-* media/nkfaagency/5.png
-* media/nkfaagency/6.jpg
-* media/nkfaagency/7.jpg
-* media/nkfaagency/8.jpg
-* media/nkfaagency/9.jpg
-* media/nkfaagency/10.jpg
-* media/nkfaagency/11.jpg
-* media/nkfaagency/12.jpg
-* media/nkfaagency/13.jpg
-* media/nkfaagency/invitation.jpg
-* media/nkfaagency/webinar.jpg
+Instagram
 
-Display in an elegant masonry layout.
+LinkedIn
+
+Location
+
+Footer:
+
+© Nandini Kumar
 
 ---
 
-## Gallery Behavior
+# ABOUT PAGE
 
-Requirements:
+Purpose:
 
-* Masonry layout
-* Responsive on desktop, tablet and mobile
-* Preserve original image aspect ratios
-* Lazy loading
-* Hover zoom effect
-* Lightbox on click
-* Keyboard navigation inside lightbox
-* Close button and ESC key support
+Media gallery.
 
-Images must be the primary visual focus of the website.
+Layout:
+
+Hero title.
+
+Description loaded from
+
+```
+text/About.txt
+```
+
+Below:
+
+Responsive masonry gallery.
+
+Use every image from:
+
+```
+media/About/
+```
+
+Click image:
+
+Fullscreen lightbox.
+
+Keyboard navigation.
+
+---
+
+# ARTISTIQUETALE PAGE
+
+Hero.
+
+Description from
+
+```
+text/ArtistiqueTale.txt
+```
+
+Responsive masonry gallery.
+
+Images from
+
+```
+media/ArtistiqueTale/
+```
+
+Fullscreen viewer.
+
+---
+
+# NKFA PAGE
+
+Hero.
+
+Description from
+
+```
+text/NKFA.txt
+```
+
+Responsive masonry gallery.
+
+Images from
+
+```
+media/NKFA/
+```
+
+Fullscreen viewer.
+
+---
+
+# Galleries
+
+Pinterest/editorial style.
+
+Different image heights.
+
+No cropping where possible.
+
+Lazy loading.
+
+Hover:
+
+Slight zoom.
+
+Soft overlay.
+
+---
+
+# Footer
+
+Consistent on every page.
+
+Minimal.
+
+Luxury.
+
+Links:
+
+Home
+
+About
+
+ArtistiqueTale
+
+NKFA
+
+Services
+
+Contact
+
+Social icons.
+
+---
+
+# Responsiveness
+
+Desktop first.
+
+Tablet optimized.
+
+Mobile optimized.
+
+Image stacks become carousels on mobile.
+
+Typography scales appropriately.
+
+Navigation becomes hamburger.
+
+No horizontal scrolling.
+
+---
+
+# Accessibility
+
+Semantic HTML.
+
+Proper landmarks.
+
+Keyboard navigation.
+
+Alt text.
+
+Visible focus states.
+
+Good contrast.
+
+---
+
+# Performance
+
+Lazy load images.
+
+Optimize rendering.
+
+Avoid layout shifts.
+
+Use modern image components.
+
+---
+
+# Tech Stack
+
+Use:
+
+- React
+- Next.js (App Router)
+- TypeScript
+- TailwindCSS
+- Framer Motion
+
+Optional:
+
+- react-photo-album
+- yet-another-react-lightbox
+
+---
+
+# Folder Structure
+
+```
+media/
+│
+├── logo.png
+├── HeroBanner/
+├── About/
+├── ArtistiqueTale/
+└── NKFA/
+
+text/
+│
+├── HeroBanner.txt
+├── About.txt
+├── ArtistiqueTale.txt
+└── NKFA.txt
+```
+
+---
+
+# Code Quality
+
+- Modular components
+- Reusable layouts
+- Clean folder structure
+- Type-safe
+- Responsive
+- Production-ready
+- No placeholder lorem ipsum except Contact placeholders
+- Automatically renders all images found in each media directory
+- Automatically loads text from corresponding text files
+- Consistent visual language across all pages
+
+The final result should feel like the online presence of a globally recognized fashion stylist and creative director—minimal, editorial, luxurious, timeless, immersive, and emotionally engaging.
