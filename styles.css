@@ -408,18 +408,19 @@ textarea:focus {
 }
 
 .checkbox-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
   margin-top: 0.6rem;
 }
 
 .checkbox-grid label,
 .radio-row label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0;
+  white-space: nowrap;
 }
 
 .radio-row {

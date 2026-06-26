@@ -82,9 +82,12 @@ function attachGalleryScroll() {
 function attachLightboxListeners() {
   const lightbox = document.getElementById('lightbox');
   const image = document.getElementById('lightbox-image');
-  const closeButton = lightbox?.querySelector('.lightbox-close');
-  const prevButton = lightbox?.querySelector('.lightbox-prev');
-  const nextButton = lightbox?.querySelector('.lightbox-next');
+
+  if (!lightbox || !image) return;
+
+  const closeButton = lightbox.querySelector('.lightbox-close');
+  const prevButton = lightbox.querySelector('.lightbox-prev');
+  const nextButton = lightbox.querySelector('.lightbox-next');
 
   let currentImages = [];
   let currentIndex = 0;
