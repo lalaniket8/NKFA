@@ -21,14 +21,16 @@ async function loadTextFile(fileName) {
   return response.text();
 }
 
-function renderText(container, content) {
+function renderText(container, content, maxParagraphs = null) {
   if (!container || !content) return;
   const blocks = content
     .trim()
     .split(/\n\s*\n/)
     .filter(Boolean);
 
-  container.innerHTML = blocks
+  const visibleBlocks = maxParagraphs ? blocks.slice(0, maxParagraphs) : blocks;
+
+  container.innerHTML = visibleBlocks
     .map((block) => `<p>${block.replace(/\n/g, '<br>')}</p>`)
     .join('');
 }
@@ -38,6 +40,43 @@ function createImageFigure(src, alt = 'Editorial image') {
   figure.className = 'gallery-card';
   figure.innerHTML = `<img src="${src}" alt="${alt}" loading="lazy" />`;
   return figure;
+}
+
+function attachGalleryScroll() {
+  document.querySelectorAll('.gallery').forEach((gallery) => {
+    const shell = document.createElement('div');
+    shell.className = 'gallery-shell';
+    shell.setAttribute('tabindex', '0');
+    shell.setAttribute('role', 'region');
+    shell.setAttribute('aria-label', 'Scrollable gallery');
+
+    gallery.parentNode.insertBefore(shell, gallery);
+    shell.appendChild(gallery);
+
+    shell.addEventListener('wheel', (event) => {
+      if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+        event.preventDefault();
+        shell.scrollTop += event.deltaY;
+      }
+    }, { passive: false });
+
+    shell.addEventListener('keydown', (event) => {
+      const step = 220;
+      if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+        event.preventDefault();
+        shell.scrollTop += step;
+      } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+        event.preventDefault();
+        shell.scrollTop -= step;
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        shell.scrollTop = 0;
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        shell.scrollTop = shell.scrollHeight;
+      }
+    });
+  });
 }
 
 function attachLightboxListeners() {
@@ -83,7 +122,8 @@ async function populatePageContent() {
   document.querySelectorAll('[data-text-file]').forEach(async (element) => {
     const fileName = element.dataset.textFile;
     const content = await loadTextFile(fileName);
-    renderText(element, content);
+    const maxParagraphs = element.classList.contains('home-about-preview') ? 2 : null;
+    renderText(element, content, maxParagraphs);
   });
 
   const heroSlideshow = document.getElementById('hero-slideshow');
@@ -174,6 +214,7 @@ function setupNavigation() {
 function init() {
   document.getElementById('year').textContent = new Date().getFullYear();
   setupNavigation();
+  attachGalleryScroll();
   attachLightboxListeners();
   populatePageContent();
 }

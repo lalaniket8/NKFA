@@ -1,11 +1,11 @@
 :root {
-  --bg: #958176;
-  --bg-soft: #e0c9a8;
+  --bg: #c7a98d;
+  --bg-soft: #efe0cd;
   --text: #ffffff;
-  --text-soft: #f5f1ec;
-  --text-dark: #232323;
-  --muted: #828282;
-  --border: rgba(255, 255, 255, 0.2);
+  --text-soft: #f7efe8;
+  --text-dark: #2f241f;
+  --muted: #6f5c4f;
+  --border: rgba(255, 255, 255, 0.22);
   --shadow: 0 20px 45px rgba(35, 35, 35, 0.12);
 }
 
@@ -21,7 +21,7 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   color: var(--text-soft);
-  background: linear-gradient(135deg, var(--bg) 0%, #8c756b 100%);
+  background: linear-gradient(135deg, #d8b89a 0%, #b98f6d 45%, #8b624b 100%);
   line-height: 1.7;
 }
 
@@ -475,6 +475,19 @@ textarea:focus {
 
 .gallery-section {
   padding: 2rem 0 5rem;
+}
+
+.gallery-shell {
+  max-height: min(78vh, 760px);
+  overflow-y: auto;
+  padding-right: 0.35rem;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+
+.gallery-shell:focus-visible {
+  outline: 2px solid rgba(224, 201, 168, 0.8);
+  outline-offset: 4px;
 }
 
 .gallery {
