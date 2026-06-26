@@ -83,8 +83,15 @@ function attachLightboxListeners() {
   const lightbox = document.getElementById('lightbox');
   const image = document.getElementById('lightbox-image');
   const closeButton = lightbox?.querySelector('.lightbox-close');
+  const prevButton = lightbox?.querySelector('.lightbox-prev');
+  const nextButton = lightbox?.querySelector('.lightbox-next');
 
-  function openLightbox(src, alt) {
+  let currentImages = [];
+  let currentIndex = 0;
+
+  function openLightbox(src, alt, images = [], index = 0) {
+    currentImages = images;
+    currentIndex = index;
     image.src = src;
     image.alt = alt;
     lightbox.classList.add('open');
@@ -98,20 +105,47 @@ function attachLightboxListeners() {
     document.body.style.overflow = '';
   }
 
+  function showImage(direction) {
+    if (!currentImages.length) return;
+    currentIndex = (currentIndex + direction + currentImages.length) % currentImages.length;
+    const nextImage = currentImages[currentIndex];
+    image.src = nextImage.src;
+    image.alt = nextImage.alt;
+  }
+
   document.addEventListener('click', (event) => {
     const card = event.target.closest('.gallery-card, .image-stack figure');
     if (!card) return;
+
     const img = card.querySelector('img');
-    if (img) openLightbox(img.src, img.alt);
+    if (!img) return;
+
+    const gallery = card.closest('.gallery') || card.closest('.image-stack');
+    const images = Array.from(gallery?.querySelectorAll('img') || []).map((item) => ({
+      src: item.src,
+      alt: item.alt,
+    }));
+
+    const index = images.findIndex((item) => item.src === img.src && item.alt === img.alt);
+    openLightbox(img.src, img.alt, images, index >= 0 ? index : 0);
   });
 
   closeButton?.addEventListener('click', closeLightbox);
+  prevButton?.addEventListener('click', () => showImage(-1));
+  nextButton?.addEventListener('click', () => showImage(1));
   lightbox?.addEventListener('click', (event) => {
     if (event.target === lightbox) closeLightbox();
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeLightbox();
+    if (!lightbox.classList.contains('open')) return;
+    if (event.key === 'Escape') {
+      closeLightbox();
+    } else if (event.key === 'ArrowLeft') {
+      showImage(-1);
+    } else if (event.key === 'ArrowRight') {
+      showImage(1);
+    }
   });
 }
 

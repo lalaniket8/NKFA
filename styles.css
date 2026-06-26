@@ -509,37 +509,76 @@ textarea:focus {
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(35, 35, 35, 0.95);
+  background: rgba(20, 20, 20, 0.96);
   display: none;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   z-index: 100;
   padding: 2rem;
 }
 
 .lightbox.open {
-  display: grid;
+  display: flex;
+}
+
+.lightbox-frame {
+  position: relative;
+  width: min(1200px, 100%);
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lightbox img {
-  max-width: min(1200px, 100%);
+  max-width: 100%;
   max-height: 90vh;
   object-fit: contain;
   border-radius: 22px;
   box-shadow: var(--shadow);
 }
 
-.lightbox-close {
+.lightbox-controls {
   position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.lightbox-controls button,
+.lightbox-close {
+  pointer-events: auto;
   width: 44px;
   height: 44px;
   border: 0;
   border-radius: 50%;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.15);
   color: var(--text);
-  font-size: 1.35rem;
   cursor: pointer;
+  display: grid;
+  place-items: center;
+  margin: 0 1rem;
+}
+
+.lightbox-controls button svg,
+.lightbox-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  margin: 0;
 }
 
 @keyframes bob {
