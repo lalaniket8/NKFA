@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NKFA | Nandini Kumar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="nkfa">
+    <header class="site-header">
+      <nav class="nav container" aria-label="Primary navigation">
+        <a class="brand" href="index.html">
+          <img src="media/logo.png" alt="Nandini Kumar logo" />
+          <span>Nandini Kumar</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links">
+          <a href="about.html">About</a>
+          <a href="artistiquetale.html">ArtistiqueTale</a>
+          <a href="nkfa.html" class="active">NKFA</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero container">
+        <p class="eyebrow">NKFA</p>
+        <h1>Empowering the next generation of fashion storytellers.</h1>
+        <div class="page-description" data-text-file="NKFA.txt"></div>
+      </section>
+
+      <section class="gallery-section container">
+        <div class="gallery" data-media-key="nkfa"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <p>hello@nandinikumar.com</p>
+          <p>+91 98765 43210</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="artistiquetale.html">ArtistiqueTale</a>
+          <a href="nkfa.html">NKFA</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <p>© <span id="year"></span> Nandini Kumar</p>
+      </div>
+    </footer>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <button class="lightbox-close" type="button" aria-label="Close lightbox">×</button>
+      <img id="lightbox-image" src="" alt="" />
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
