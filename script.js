@@ -89,13 +89,6 @@ const fallbackManifest = {
   ]
 };
 
-const fallbackText = {
-  'about.txt': 'Nandini Kumar brings together fashion, cultural storytelling, and intentional design with a distinctly personal point of view.',
-  'artistiquetale.txt': 'ArtistiqueTale curates soulful interiors and meaningful objects that blend timeless craft with contemporary living.',
-  'nkfa.txt': 'NKFA nurtures emerging talent through mentorship, strategic exposure, and industry-aligned guidance.',
-  'services.txt': 'Signature wedding curation blending styling, sourcing, and planning into a seamless luxury experience.'
-};
-
 function getMediaKey(page) {
   const map = {
     home: 'herobanner',
@@ -116,40 +109,6 @@ async function loadManifest() {
   } catch {
     return fallbackManifest;
   }
-}
-
-async function loadTextFile(fileName) {
-  const candidates = [
-    `text/${fileName}`,
-    `text/${String(fileName || '').toLowerCase()}`,
-  ];
-
-  for (const candidate of candidates) {
-    try {
-      const response = await fetch(candidate);
-      if (response.ok) {
-        return response.text();
-      }
-    } catch {
-      // Try the next candidate path.
-    }
-  }
-
-  return fallbackText[String(fileName || '').toLowerCase()] || '';
-}
-
-function renderText(container, content, maxParagraphs = null) {
-  if (!container || !content) return;
-  const blocks = content
-    .trim()
-    .split(/\n\s*\n/)
-    .filter(Boolean);
-
-  const visibleBlocks = maxParagraphs ? blocks.slice(0, maxParagraphs) : blocks;
-
-  container.innerHTML = visibleBlocks
-    .map((block) => `<p>${block.replace(/\n/g, '<br>')}</p>`)
-    .join('');
 }
 
 function createImageFigure(src, alt = 'Editorial image') {
@@ -274,13 +233,6 @@ async function populatePageContent() {
   const page = document.body.dataset.page || 'home';
   const manifest = await loadManifest();
 
-  document.querySelectorAll('[data-text-file]').forEach(async (element) => {
-    const fileName = element.dataset.textFile;
-    const content = await loadTextFile(fileName);
-    const maxParagraphs = element.classList.contains('home-about-preview') ? 2 : null;
-    renderText(element, content, maxParagraphs);
-  });
-
   const heroSlideshow = document.getElementById('hero-slideshow');
   if (heroSlideshow) {
     heroSlideshow.remove();
@@ -325,6 +277,7 @@ function setupNavigation() {
   const header = document.querySelector('.site-header');
   const toggle = document.querySelector('.nav-toggle');
   const links = document.querySelector('.nav-links');
+  const dropdowns = Array.from(document.querySelectorAll('.nav-dropdown'));
 
   function onScroll() {
     if (window.scrollY > 20) {
@@ -343,10 +296,39 @@ function setupNavigation() {
     links?.classList.toggle('open');
   });
 
+  function closeDropdowns() {
+    dropdowns.forEach((dropdown) => {
+      dropdown.classList.remove('open');
+      dropdown.querySelector('.nav-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  dropdowns.forEach((dropdown) => {
+    const button = dropdown.querySelector('.nav-dropdown-toggle');
+
+    button?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = dropdown.classList.contains('open');
+      closeDropdowns();
+
+      if (!isOpen) {
+        dropdown.classList.add('open');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.nav-dropdown')) {
+      closeDropdowns();
+    }
+  });
+
   document.querySelectorAll('.nav-links a').forEach((link) => {
     link.addEventListener('click', () => {
       links?.classList.remove('open');
       toggle?.setAttribute('aria-expanded', 'false');
+      closeDropdowns();
     });
   });
 }

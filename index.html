@@ -17,16 +17,20 @@
     <header class="site-header">
       <nav class="nav container" aria-label="Primary navigation">
         <a class="brand" href="index.html">
-          <span class="brand-title">NKFA</span>
-          <span class="brand-subtitle">Nandini Kumar Fashion Agency</span>
+          <img src="media/logo/logo.png" alt="NKFA logo" />
         </a>
         <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
         <div class="nav-links">
           <a href="about.html">About</a>
-          <a href="artistiquetale.html">ArtistiqueTale</a>
-          <a href="nkfa.html">NKFA</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false">My Journey</button>
+            <div class="nav-dropdown-menu">
+              <a href="artistiquetale.html">ArtistiqueTale</a>
+              <a href="nkfa.html">NKFA</a>
+            </div>
+          </div>
           <a href="#services">Services</a>
           <a href="#contact">Contact</a>
         </div>
@@ -212,7 +216,7 @@
             <h2>Wedding curation experience</h2>
             <p class="section-subtitle">By Nandini Kumar</p>
           </div>
-          <div class="services-intro" data-text-file="services.txt"></div>
+          <div class="services-intro"></div>
           <div class="services-grid">
             <article class="service-card large">
               <h3>Signature Wedding Curation</h3>

@@ -16,16 +16,20 @@
     <header class="site-header">
       <nav class="nav container" aria-label="Primary navigation">
         <a class="brand" href="index.html">
-          <span class="brand-title">NKFA</span>
-          <span class="brand-subtitle">Nandini Kumar Fashion Agency</span>
+          <img src="media/logo/logo.png" alt="NKFA logo" />
         </a>
         <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
         <div class="nav-links">
           <a href="about.html">About</a>
-          <a href="artistiquetale.html" class="active">ArtistiqueTale</a>
-          <a href="nkfa.html">NKFA</a>
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-toggle" type="button" aria-expanded="false">My Journey</button>
+            <div class="nav-dropdown-menu">
+              <a href="artistiquetale.html" class="active">ArtistiqueTale</a>
+              <a href="nkfa.html">NKFA</a>
+            </div>
+          </div>
           <a href="index.html#services">Services</a>
           <a href="index.html#contact">Contact</a>
         </div>
@@ -38,8 +42,13 @@
           <div class="content-block page-detail-copy">
             <p class="eyebrow dark">ArtistiqueTale</p>
             <h1>Thoughtful interiors, timeless artistry, and meaningful living.</h1>
-            <div class="page-description" data-text-file="ArtistiqueTale.txt"></div>
+            <div class="page-description">
+              ArtistiqueTale is a celebration of conscious living, where thoughtfully curated furnishings, décor, and artistic expression come together to create spaces that inspire connection, warmth, and meaning.
+            </div>
           </div>
+          <figure class="page-detail-image">
+            <img src="media/artistiquetale_master.jpg" alt="ArtistiqueTale signature visual" loading="lazy" />
+          </figure>
         </div>
       </section>
 
