@@ -18,7 +18,7 @@ const fallbackNavbar = `
         <a href="nkfa.html" data-nav-item="nkfa">NKFA</a>
       </div>
     </div>
-    <a href="index.html#services" data-nav-item="services">Services</a>
+    <a href="services.html" data-nav-item="services">Services</a>
     <a href="index.html#contact" data-nav-item="contact">Contact</a>
   </div>
 </nav>
@@ -259,6 +259,7 @@ function syncNavigationState() {
     about: 'about',
     artistiquetale: 'artistiquetale',
     nkfa: 'nkfa',
+    services: 'services',
   };
 
   const activeItem = activeItemByPage[page];
@@ -277,8 +278,11 @@ function syncNavigationState() {
   if (page === 'home') {
     servicesLink?.setAttribute('href', '#services');
     contactLink?.setAttribute('href', '#contact');
+  } else if (page === 'services') {
+    servicesLink?.setAttribute('href', 'services.html');
+    contactLink?.setAttribute('href', 'index.html#contact');
   } else {
-    servicesLink?.setAttribute('href', 'index.html#services');
+    servicesLink?.setAttribute('href', 'services.html');
     contactLink?.setAttribute('href', 'index.html#contact');
   }
 }

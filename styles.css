@@ -36,7 +36,8 @@ body[data-page="home"] {
 
 body[data-page="about"],
 body[data-page="artistiquetale"],
-body[data-page="nkfa"] {
+body[data-page="nkfa"],
+body[data-page="services"] {
   background: linear-gradient(145deg, #4d3a31 0%, #684E41 46%, #967969 100%);
 }
 
@@ -441,7 +442,7 @@ body[data-page="home"] .hero-actions {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(130deg, rgba(247, 238, 232, 0.28), transparent 40%), url("theme/section_theme.jpeg") center/cover;
+  background: linear-gradient(130deg, rgba(247, 238, 232, 0.28), transparent 40%);
   opacity: 0.13;
   pointer-events: none;
 }
@@ -893,6 +894,10 @@ select:focus {
   padding: 7rem 0 2rem;
 }
 
+.services-page-intro .page-description {
+  max-width: 58ch;
+}
+
 .page-detail-shell {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
@@ -951,6 +956,41 @@ select:focus {
 .page-detail-image img {
   width: 100%;
   height: auto;
+}
+
+.service-detail-section {
+  min-height: auto;
+  padding: 1.1rem 0 1.2rem;
+}
+
+.service-detail-shell {
+  align-items: stretch;
+}
+
+.service-detail-image {
+  aspect-ratio: 4 / 5;
+}
+
+.service-detail-image img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-points {
+  margin: 1rem 0 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.45rem;
+  color: var(--text-soft);
+}
+
+.service-points li {
+  margin: 0;
+}
+
+.service-note {
+  margin-top: 1rem;
+  color: var(--text-soft);
 }
 
 .page-gallery-section {
