@@ -4,7 +4,7 @@ const sharedNavbarUrl = 'partials/navbar.html';
 const fallbackNavbar = `
 <nav class="nav container" aria-label="Primary navigation">
   <a class="brand" href="index.html">
-    <img src="media/logo/logo.png" alt="NKFA logo" />
+    <img src="media/logo/logo_dark.jpg" alt="NKFA logo" />
   </a>
   <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
     <span></span><span></span><span></span>

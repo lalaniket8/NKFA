@@ -70,11 +70,12 @@ textarea {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
+  background: rgb(35, 31, 32);
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .site-header.scrolled {
-  background: rgba(104, 78, 65, 0.3);
+  background: rgb(35, 31, 32);
   box-shadow: none;
 }
 
@@ -324,7 +325,7 @@ body[data-page="home"] .footer-bottom {
 }
 
 .hero-text-1 {
-  font-size: clamp(2rem, 3.5vw, 3.15rem);
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
   font-family: 'Playfair Display', serif;
   font-weight: 700;
   line-height: 1.08;
@@ -346,9 +347,14 @@ body[data-page="home"] .footer-bottom {
 .hero-text-3 {
   font-size: clamp(1.1rem, 1.9vw, 1.35rem);
   font-family: 'Playfair Display', serif;
-  font-style: italic;
+  /* font-style: italic; */
   line-height: 1.55;
   color: rgba(252, 247, 241, 0.9);
+}
+
+.hero-text-3-highlight {
+  color: var(--text-dark);
+  font-weight: 700;
 }
 
 .hero-text-4 {
@@ -1177,7 +1183,7 @@ select:focus {
     top: 72px;
     right: 1rem;
     left: 1rem;
-    background: rgba(104, 78, 65, 0.94);
+    background: rgb(35, 31, 32);
     padding: 1rem;
     border-radius: 16px;
     flex-direction: column;
