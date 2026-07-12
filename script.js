@@ -1,4 +1,28 @@
 const manifestUrl = 'media-manifest.json';
+const sharedNavbarUrl = 'partials/navbar.html';
+
+const fallbackNavbar = `
+<nav class="nav container" aria-label="Primary navigation">
+  <a class="brand" href="index.html">
+    <img src="media/logo/logo.png" alt="NKFA logo" />
+  </a>
+  <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="about.html" data-nav-item="about">About</a>
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-toggle" type="button" aria-expanded="false">My Journey</button>
+      <div class="nav-dropdown-menu">
+        <a href="artistiquetale.html" data-nav-item="artistiquetale">ArtistiqueTale</a>
+        <a href="nkfa.html" data-nav-item="nkfa">NKFA</a>
+      </div>
+    </div>
+    <a href="index.html#services" data-nav-item="services">Services</a>
+    <a href="index.html#contact" data-nav-item="contact">Contact</a>
+  </div>
+</nav>
+`;
 
 const fallbackManifest = {
   herobanner: [],
@@ -229,6 +253,57 @@ function attachLightboxListeners() {
   });
 }
 
+function syncNavigationState() {
+  const page = document.body.dataset.page || 'home';
+  const activeItemByPage = {
+    about: 'about',
+    artistiquetale: 'artistiquetale',
+    nkfa: 'nkfa',
+  };
+
+  const activeItem = activeItemByPage[page];
+  document.querySelectorAll('.nav-links [data-nav-item]').forEach((item) => {
+    const isActive = item.dataset.navItem === activeItem;
+    item.classList.toggle('active', isActive);
+    if (isActive) {
+      item.setAttribute('aria-current', 'page');
+    } else {
+      item.removeAttribute('aria-current');
+    }
+  });
+
+  const servicesLink = document.querySelector('.nav-links [data-nav-item="services"]');
+  const contactLink = document.querySelector('.nav-links [data-nav-item="contact"]');
+  if (page === 'home') {
+    servicesLink?.setAttribute('href', '#services');
+    contactLink?.setAttribute('href', '#contact');
+  } else {
+    servicesLink?.setAttribute('href', 'index.html#services');
+    contactLink?.setAttribute('href', 'index.html#contact');
+  }
+}
+
+async function loadSharedNavbar() {
+  const header = document.querySelector('.site-header[data-shared-nav], .site-header');
+  if (!header) return;
+
+  if (header.querySelector('.nav')) {
+    syncNavigationState();
+    return;
+  }
+
+  try {
+    const response = await fetch(sharedNavbarUrl);
+    if (!response.ok) throw new Error('Failed to load shared navbar');
+    header.innerHTML = await response.text();
+  } catch {
+    // Fallback keeps navigation available if fetch is blocked or fails.
+    header.innerHTML = fallbackNavbar;
+  }
+
+  syncNavigationState();
+}
+
 async function populatePageContent() {
   const page = document.body.dataset.page || 'home';
   const manifest = await loadManifest();
@@ -333,11 +408,13 @@ function setupNavigation() {
   });
 }
 
-function init() {
+async function init() {
   const yearElement = document.getElementById('year');
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
+
+  await loadSharedNavbar();
   setupNavigation();
   attachGalleryScroll();
   attachLightboxListeners();
