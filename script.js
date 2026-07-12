@@ -276,7 +276,7 @@ function syncNavigationState() {
   const servicesLink = document.querySelector('.nav-links [data-nav-item="services"]');
   const contactLink = document.querySelector('.nav-links [data-nav-item="contact"]');
   if (page === 'home') {
-    servicesLink?.setAttribute('href', '#services');
+    servicesLink?.setAttribute('href', 'services.html');
     contactLink?.setAttribute('href', '#contact');
   } else if (page === 'services') {
     servicesLink?.setAttribute('href', 'services.html');

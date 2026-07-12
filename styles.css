@@ -922,6 +922,7 @@ select:focus {
 .page-detail-copy .page-description {
   color: var(--text-soft);
   font-size: 1.05rem;
+  font-family: Verdana, Geneva, sans-serif;
 }
 
 .text-placeholder {
