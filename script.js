@@ -71,28 +71,29 @@ function createImageFigure(src, alt = 'Editorial image') {
   return figure;
 }
 
-function createAudioCard(src, title = 'Client testimonial') {
+function createVideoCard(src, title = 'Client testimonial') {
   const normalizedSrc = String(src || '').replace(/^\//, '');
   const card = document.createElement('article');
-  card.className = 'testimonial-audio-card';
+  card.className = 'testimonial-video-card';
 
   const heading = document.createElement('h3');
   heading.textContent = title;
 
-  const audio = document.createElement('audio');
-  audio.controls = true;
-  audio.preload = 'none';
-  audio.src = normalizedSrc;
-  audio.addEventListener('error', () => {
-    console.error(`Audio failed to load: ${normalizedSrc}`);
+  const video = document.createElement('video');
+  video.controls = true;
+  video.preload = 'metadata';
+  video.src = normalizedSrc;
+  video.playsInline = true;
+  video.addEventListener('error', () => {
+    console.error(`Video failed to load: ${normalizedSrc}`);
   });
 
   const fallbackText = document.createElement('p');
-  fallbackText.className = 'testimonial-audio-note';
-  fallbackText.innerHTML = `Unable to play this recording. <a href="${normalizedSrc}" target="_blank" rel="noopener">Open file</a>.`;
+  fallbackText.className = 'testimonial-video-note';
+  fallbackText.innerHTML = `Unable to play this video. <a href="${normalizedSrc}" target="_blank" rel="noopener">Open file</a>.`;
 
   card.appendChild(heading);
-  card.appendChild(audio);
+  card.appendChild(video);
   card.appendChild(fallbackText);
   return card;
 }
@@ -346,14 +347,14 @@ async function populatePageContent() {
     });
   });
 
-  document.querySelectorAll('[data-audio-key]').forEach((container) => {
-    const audioKey = container.dataset.audioKey;
-    const recordings = manifest[audioKey] || [];
+  document.querySelectorAll('[data-video-key]').forEach((container) => {
+    const videoKey = container.dataset.videoKey;
+    const recordings = manifest[videoKey] || [];
     container.innerHTML = '';
 
     recordings.forEach((src, index) => {
       const title = `Testimonial ${index + 1}`;
-      const card = createAudioCard(src, title);
+      const card = createVideoCard(src, title);
       container.appendChild(card);
     });
   });
