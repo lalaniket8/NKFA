@@ -71,6 +71,32 @@ function createImageFigure(src, alt = 'Editorial image') {
   return figure;
 }
 
+function createAudioCard(src, title = 'Client testimonial') {
+  const normalizedSrc = String(src || '').replace(/^\//, '');
+  const card = document.createElement('article');
+  card.className = 'testimonial-audio-card';
+
+  const heading = document.createElement('h3');
+  heading.textContent = title;
+
+  const audio = document.createElement('audio');
+  audio.controls = true;
+  audio.preload = 'none';
+  audio.src = normalizedSrc;
+  audio.addEventListener('error', () => {
+    console.error(`Audio failed to load: ${normalizedSrc}`);
+  });
+
+  const fallbackText = document.createElement('p');
+  fallbackText.className = 'testimonial-audio-note';
+  fallbackText.innerHTML = `Unable to play this recording. <a href="${normalizedSrc}" target="_blank" rel="noopener">Open file</a>.`;
+
+  card.appendChild(heading);
+  card.appendChild(audio);
+  card.appendChild(fallbackText);
+  return card;
+}
+
 function attachGalleryScroll() {
   document.querySelectorAll('.gallery').forEach((gallery) => {
     const shell = document.createElement('div');
@@ -274,6 +300,18 @@ async function populatePageContent() {
     images.forEach((src) => {
       const figure = createImageFigure(src);
       container.appendChild(figure);
+    });
+  });
+
+  document.querySelectorAll('[data-audio-key]').forEach((container) => {
+    const audioKey = container.dataset.audioKey;
+    const recordings = manifest[audioKey] || [];
+    container.innerHTML = '';
+
+    recordings.forEach((src, index) => {
+      const title = `Testimonial ${index + 1}`;
+      const card = createAudioCard(src, title);
+      container.appendChild(card);
     });
   });
 

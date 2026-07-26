@@ -696,6 +696,51 @@ body[data-page="home"] .hero-actions {
   color: var(--text-light);
 }
 
+.testimonials-section {
+  min-height: auto;
+  padding: 3.2rem 0;
+}
+
+.testimonials-shell {
+  background: linear-gradient(140deg, rgba(239, 225, 213, 0.95), rgba(230, 212, 198, 0.93));
+}
+
+.testimonials-audio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.testimonial-audio-card {
+  background: rgba(247, 238, 232, 0.78);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1rem;
+  box-shadow: 0 10px 22px rgba(46, 31, 24, 0.08);
+}
+
+.testimonial-audio-card h3 {
+  margin: 0 0 0.65rem;
+  color: var(--text);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+}
+
+.testimonial-audio-card audio {
+  width: 100%;
+  display: block;
+}
+
+.testimonial-audio-note {
+  margin: 0.7rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-soft);
+}
+
+.testimonial-audio-note a {
+  text-decoration: underline;
+}
+
 .consultation-grid {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
