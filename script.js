@@ -97,6 +97,50 @@ function createAudioCard(src, title = 'Client testimonial') {
   return card;
 }
 
+function setupHeroSlideshow(images) {
+  const hero = document.querySelector('.hero');
+  if (!hero || !Array.isArray(images) || !images.length) return;
+
+  const existingSlideshow = document.getElementById('hero-slideshow');
+  if (existingSlideshow) {
+    existingSlideshow.remove();
+  }
+
+  const normalizedImages = images
+    .map((src) => String(src || '').replace(/^\//, ''))
+    .filter(Boolean);
+
+  if (!normalizedImages.length) return;
+
+  const slideshow = document.createElement('div');
+  slideshow.className = 'hero-slideshow';
+  slideshow.id = 'hero-slideshow';
+
+  normalizedImages.forEach((src, index) => {
+    const image = document.createElement('img');
+    image.src = src;
+    image.alt = 'Hero showcase image';
+    image.loading = index === 0 ? 'eager' : 'lazy';
+    image.classList.toggle('active', index === 0);
+    image.addEventListener('error', () => {
+      console.error(`Hero image failed to load: ${src}`);
+    });
+    slideshow.appendChild(image);
+  });
+
+  hero.prepend(slideshow);
+
+  if (normalizedImages.length < 2) return;
+
+  let currentIndex = 0;
+  const slides = Array.from(slideshow.querySelectorAll('img'));
+  window.setInterval(() => {
+    slides[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % slides.length;
+    slides[currentIndex].classList.add('active');
+  }, 5000);
+}
+
 function attachGalleryScroll() {
   document.querySelectorAll('.gallery').forEach((gallery) => {
     const shell = document.createElement('div');
@@ -273,9 +317,8 @@ async function populatePageContent() {
   const page = document.body.dataset.page || 'home';
   const manifest = await loadManifest();
 
-  const heroSlideshow = document.getElementById('hero-slideshow');
-  if (heroSlideshow) {
-    heroSlideshow.remove();
+  if (page === 'home') {
+    setupHeroSlideshow(manifest.herobanner || []);
   }
 
   document.querySelectorAll('[data-media-key]').forEach((container) => {

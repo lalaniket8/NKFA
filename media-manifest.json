@@ -1,5 +1,10 @@
 {
-  "herobanner": [],
+  "herobanner": [
+    "/media/HeroBanner/DSC_2021.jpg",
+    "/media/HeroBanner/hero-1.jpg",
+    "/media/HeroBanner/hero-2.jpg",
+    "/media/HeroBanner/hero-3.jpg"
+  ],
   "about": [
     "/media/about/1.jpg",
     "/media/about/2.jpg",
