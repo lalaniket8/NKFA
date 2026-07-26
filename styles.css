@@ -697,7 +697,7 @@ body[data-page="home"] .hero-actions {
 }
 
 .testimonials-section {
-  min-height: auto;
+  min-height: 100vh;
   padding: 3.2rem 0;
 }
 
