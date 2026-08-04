@@ -98,50 +98,6 @@ function createVideoCard(src, title = 'Client testimonial') {
   return card;
 }
 
-function setupHeroSlideshow(images) {
-  const hero = document.querySelector('.hero');
-  if (!hero || !Array.isArray(images) || !images.length) return;
-
-  const existingSlideshow = document.getElementById('hero-slideshow');
-  if (existingSlideshow) {
-    existingSlideshow.remove();
-  }
-
-  const normalizedImages = images
-    .map((src) => String(src || '').replace(/^\//, ''))
-    .filter(Boolean);
-
-  if (!normalizedImages.length) return;
-
-  const slideshow = document.createElement('div');
-  slideshow.className = 'hero-slideshow';
-  slideshow.id = 'hero-slideshow';
-
-  normalizedImages.forEach((src, index) => {
-    const image = document.createElement('img');
-    image.src = src;
-    image.alt = 'Hero showcase image';
-    image.loading = index === 0 ? 'eager' : 'lazy';
-    image.classList.toggle('active', index === 0);
-    image.addEventListener('error', () => {
-      console.error(`Hero image failed to load: ${src}`);
-    });
-    slideshow.appendChild(image);
-  });
-
-  hero.prepend(slideshow);
-
-  if (normalizedImages.length < 2) return;
-
-  let currentIndex = 0;
-  const slides = Array.from(slideshow.querySelectorAll('img'));
-  window.setInterval(() => {
-    slides[currentIndex].classList.remove('active');
-    currentIndex = (currentIndex + 1) % slides.length;
-    slides[currentIndex].classList.add('active');
-  }, 5000);
-}
-
 function attachGalleryScroll() {
   document.querySelectorAll('.gallery').forEach((gallery) => {
     const shell = document.createElement('div');
@@ -217,20 +173,22 @@ function attachLightboxListeners() {
   }
 
   document.addEventListener('click', (event) => {
-    const card = event.target.closest('.gallery-card, .image-stack figure');
+    const card = event.target.closest('.gallery-card, .image-stack figure, .testimonial-image-card');
     if (!card) return;
 
     const img = card.querySelector('img');
     if (!img) return;
 
-    const gallery = card.closest('.gallery') || card.closest('.image-stack');
+    const activeSrc = img.dataset.lightboxSrc || img.src;
+
+    const gallery = card.closest('.gallery') || card.closest('.image-stack') || card.closest('.testimonial-image-grid');
     const images = Array.from(gallery?.querySelectorAll('img') || []).map((item) => ({
-      src: item.src,
+      src: item.dataset.lightboxSrc || item.src,
       alt: item.alt,
     }));
 
-    const index = images.findIndex((item) => item.src === img.src && item.alt === img.alt);
-    openLightbox(img.src, img.alt, images, index >= 0 ? index : 0);
+    const index = images.findIndex((item) => item.src === activeSrc && item.alt === img.alt);
+    openLightbox(activeSrc, img.alt, images, index >= 0 ? index : 0);
   });
 
   closeButton?.addEventListener('click', closeLightbox);
@@ -286,6 +244,52 @@ function syncNavigationState() {
   }
 }
 
+async function convertHeicTestimonialThumbnails() {
+  const images = Array.from(document.querySelectorAll('.testimonial-image-card img'));
+  if (!images.length) return;
+
+  const probe = images.find((item) => /\.heic(\?|$)/i.test(item.getAttribute('src') || ''));
+  if (!probe) return;
+
+  const nativeSupported = await new Promise((resolve) => {
+    const test = new Image();
+    test.onload = () => resolve(true);
+    test.onerror = () => resolve(false);
+    test.src = probe.getAttribute('src') || '';
+  });
+
+  if (nativeSupported) return;
+
+  if (typeof heic2any !== 'function') {
+    console.error('heic2any library not available; HEIC thumbnails may not render.');
+    return;
+  }
+
+  await Promise.all(images.map(async (img) => {
+    const originalSrc = img.getAttribute('src') || '';
+    if (!/\.heic(\?|$)/i.test(originalSrc)) return;
+
+    try {
+      const response = await fetch(originalSrc);
+      if (!response.ok) throw new Error(`Failed to fetch ${originalSrc}`);
+
+      const heicBlob = await response.blob();
+      const converted = await heic2any({
+        blob: heicBlob,
+        toType: 'image/jpeg',
+        quality: 0.9,
+      });
+
+      const jpegBlob = Array.isArray(converted) ? converted[0] : converted;
+      const objectUrl = URL.createObjectURL(jpegBlob);
+      img.src = objectUrl;
+      img.dataset.lightboxSrc = objectUrl;
+    } catch (error) {
+      console.error(`Failed to convert HEIC image: ${originalSrc}`, error);
+    }
+  }));
+}
+
 async function loadSharedNavbar() {
   const header = document.querySelector('.site-header[data-shared-nav], .site-header');
   if (!header) return;
@@ -317,10 +321,6 @@ async function loadSharedNavbar() {
 async function populatePageContent() {
   const page = document.body.dataset.page || 'home';
   const manifest = await loadManifest();
-
-  if (page === 'home') {
-    setupHeroSlideshow(manifest.herobanner || []);
-  }
 
   document.querySelectorAll('[data-media-key]').forEach((container) => {
     if (container.classList.contains('gallery')) return;
@@ -439,7 +439,8 @@ async function init() {
   setupNavigation();
   attachGalleryScroll();
   attachLightboxListeners();
-  populatePageContent();
+  await populatePageContent();
+  await convertHeicTestimonialThumbnails();
 }
 
 init();
