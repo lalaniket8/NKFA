@@ -15,6 +15,7 @@ const fallbackNavbar = `
     <div class="nav-dropdown">
       <button class="nav-dropdown-toggle" type="button" aria-expanded="false">My Journey</button>
       <div class="nav-dropdown-menu">
+        <a href="my-journey.html" data-nav-item="myjourney">My Journey</a>
         <a href="artistiquetale.html" data-nav-item="artistiquetale">ArtistiqueTale</a>
         <a href="nkfa.html" data-nav-item="nkfa">NKFA</a>
       </div>
@@ -214,6 +215,7 @@ function syncNavigationState() {
   const page = document.body.dataset.page || 'home';
   const activeItemByPage = {
     about: 'about',
+    myjourney: 'myjourney',
     artistiquetale: 'artistiquetale',
     nkfa: 'nkfa',
     services: 'services',
