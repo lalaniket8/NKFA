@@ -363,8 +363,46 @@ async function populatePageContent() {
 
   const form = document.getElementById('consultation-form');
   const formNote = document.getElementById('form-note');
+  const googleFormUrl = form?.dataset.googleFormUrl;
+  const googleFormFieldMap = {
+    weddingDate: 'entry.255432743',
+    residence: 'entry.790080973',
+    phone: 'entry.1770822543',
+    email: 'entry.227649005',
+    instagram: 'entry.1846923513',
+    location: 'entry.483377122',
+    weddingType: 'entry.2084989293',
+    style: 'entry.581423695',
+    mode: 'entry.209996122'
+  };
+
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    if (googleFormUrl && googleFormUrl !== 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse') {
+      const params = new URLSearchParams();
+      const formData = new FormData(form);
+
+      const brideName = String(formData.get('brideName') || '').trim();
+      if (brideName) {
+        params.append('entry.1633920210', brideName);
+      }
+
+      Object.entries(googleFormFieldMap).forEach(([fieldName, entryId]) => {
+        const rawValue = formData.get(fieldName);
+        if (rawValue !== null && String(rawValue).trim() !== '') {
+          params.append(entryId, String(rawValue).trim());
+        }
+      });
+
+      if (formNote) {
+        formNote.textContent = 'Redirecting to your Google Form...';
+      }
+
+      window.location.href = `${googleFormUrl}?${params.toString()}`;
+      return;
+    }
+
     if (formNote) {
       formNote.textContent = 'Thank you — your consultation request has been received.';
     }
