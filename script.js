@@ -1,6 +1,7 @@
 const manifestUrl = 'media-manifest.json';
 const sharedNavbarUrl = 'partials/navbar.html';
 const isFileProtocol = window.location.protocol === 'file:';
+const consultationFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSc11RG3qIPdYOEHrdi2GP10-p8LXv9wKV63aF2Kkgb-ZeXWaA/viewform';
 
 const fallbackNavbar = `
 <nav class="nav container" aria-label="Primary navigation">
@@ -21,7 +22,7 @@ const fallbackNavbar = `
       </div>
     </div>
     <a href="services.html" data-nav-item="services">Services</a>
-    <a href="index.html#contact" data-nav-item="contact">Contact</a>
+    <a href="${consultationFormUrl}" data-nav-item="contact" target="_blank" rel="noopener noreferrer">Contact</a>
   </div>
 </nav>
 `;
@@ -234,16 +235,10 @@ function syncNavigationState() {
 
   const servicesLink = document.querySelector('.nav-links [data-nav-item="services"]');
   const contactLink = document.querySelector('.nav-links [data-nav-item="contact"]');
-  if (page === 'home') {
-    servicesLink?.setAttribute('href', 'services.html');
-    contactLink?.setAttribute('href', '#contact');
-  } else if (page === 'services') {
-    servicesLink?.setAttribute('href', 'services.html');
-    contactLink?.setAttribute('href', 'index.html#contact');
-  } else {
-    servicesLink?.setAttribute('href', 'services.html');
-    contactLink?.setAttribute('href', 'index.html#contact');
-  }
+  servicesLink?.setAttribute('href', 'services.html');
+  contactLink?.setAttribute('href', consultationFormUrl);
+  contactLink?.setAttribute('target', '_blank');
+  contactLink?.setAttribute('rel', 'noopener noreferrer');
 }
 
 async function convertHeicTestimonialThumbnails() {
