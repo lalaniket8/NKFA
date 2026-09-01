@@ -364,42 +364,52 @@ async function populatePageContent() {
   const form = document.getElementById('consultation-form');
   const formNote = document.getElementById('form-note');
   const googleFormUrl = form?.dataset.googleFormUrl;
-  const googleFormFieldMap = {
-    weddingDate: 'entry.255432743',
-    residence: 'entry.790080973',
-    phone: 'entry.1770822543',
-    email: 'entry.227649005',
-    instagram: 'entry.1846923513',
-    location: 'entry.483377122',
-    weddingType: 'entry.2084989293',
-    style: 'entry.581423695',
-    mode: 'entry.209996122'
-  };
 
-  form?.addEventListener('submit', (event) => {
+  form?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    if (googleFormUrl && googleFormUrl !== 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse') {
-      const params = new URLSearchParams();
-      const formData = new FormData(form);
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
-      const brideName = String(formData.get('brideName') || '').trim();
-      if (brideName) {
-        params.append('entry.1633920210', brideName);
+    if (googleFormUrl && googleFormUrl !== 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse') {
+      if (formNote) {
+        formNote.textContent = 'Submitting your consultation request...';
       }
 
-      Object.entries(googleFormFieldMap).forEach(([fieldName, entryId]) => {
-        const rawValue = formData.get(fieldName);
-        if (rawValue !== null && String(rawValue).trim() !== '') {
-          params.append(entryId, String(rawValue).trim());
+      const params = new URLSearchParams();
+      const fields = form.querySelectorAll('[data-google-entry]');
+
+      fields.forEach((field) => {
+        const entryId = field.dataset.googleEntry;
+        const value = (field.value || '').trim();
+
+        if (entryId && value !== '') {
+          params.append(entryId, value);
         }
       });
 
-      if (formNote) {
-        formNote.textContent = 'Redirecting to your Google Form...';
+      try {
+        await fetch(googleFormUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+          body: params.toString()
+        });
+
+        form.reset();
+        if (formNote) {
+          formNote.textContent = 'Thank you — your consultation request has been received.';
+        }
+      } catch (error) {
+        if (formNote) {
+          formNote.textContent = 'Unable to submit right now. Please try again in a moment.';
+        }
       }
 
-      window.location.href = `${googleFormUrl}?${params.toString()}`;
       return;
     }
 
