@@ -13,11 +13,11 @@ const fallbackNavbar = `
   <div class="nav-links">
     <a href="about.html" data-nav-item="about">About</a>
     <div class="nav-dropdown">
-      <button class="nav-dropdown-toggle" type="button" aria-expanded="false">Fashion</button>
+      <button class="nav-dropdown-toggle" type="button" aria-expanded="false">My Journey</button>
       <div class="nav-dropdown-menu">
         <a href="fashion.html" data-nav-item="myjourney">Fashion</a>
-        <a href="artistiquetale.html" data-nav-item="artistiquetale">ArtistiqueTale</a>
         <a href="nkfa.html" data-nav-item="nkfa">NKFA</a>
+        <a href="artistiquetale.html" data-nav-item="artistiquetale">ArtistiqueTale</a>
       </div>
     </div>
     <a href="services.html" data-nav-item="services">Services</a>
