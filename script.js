@@ -31,6 +31,8 @@ function getMediaKey(page) {
   const map = {
     home: 'herobanner',
     about: 'about',
+    fashion: 'fashion',
+    myjourney: 'fashion',
     artistiquetale: 'artistiquetale',
     nkfa: 'nkfa',
   };
