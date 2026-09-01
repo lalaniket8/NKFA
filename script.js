@@ -13,9 +13,9 @@ const fallbackNavbar = `
   <div class="nav-links">
     <a href="about.html" data-nav-item="about">About</a>
     <div class="nav-dropdown">
-      <button class="nav-dropdown-toggle" type="button" aria-expanded="false">My Journey</button>
+      <button class="nav-dropdown-toggle" type="button" aria-expanded="false">Fashion</button>
       <div class="nav-dropdown-menu">
-        <a href="my-journey.html" data-nav-item="myjourney">My Journey</a>
+        <a href="fashion.html" data-nav-item="myjourney">Fashion</a>
         <a href="artistiquetale.html" data-nav-item="artistiquetale">ArtistiqueTale</a>
         <a href="nkfa.html" data-nav-item="nkfa">NKFA</a>
       </div>
