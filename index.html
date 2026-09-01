@@ -214,19 +214,19 @@ A pioneer in bringing fashion and lifestyle storytelling into Indian homes throu
             data-google-form-url="https://docs.google.com/forms/d/e/1FAIpQLSc11RG3qIPdYOEHrdi2GP10-p8LXv9wKV63aF2Kkgb-ZeXWaA/formResponse"
           >
             <div class="form-row">
-              <label>Bride Name<input type="text" name="brideName" data-google-entry="entry.1633920210" required /></label>
-              <label>Wedding Date / Month<input type="text" name="weddingDate" data-google-entry="entry.255432743" placeholder="e.g. December 2026" required /></label>
+              <label>Bride Name<input type="text" name="brideName" data-google-entry="entry.1633920210" minlength="2" maxlength="80" autocomplete="name" required /></label>
+              <label>Wedding Date / Month<input type="text" name="weddingDate" data-google-entry="entry.255432743" placeholder="e.g. December 2026 or 14/12/2026" minlength="7" maxlength="25" required /></label>
             </div>
             <div class="form-row">
-              <label>Address<input type="text" name="residence" data-google-entry="entry.790080973" required /></label>
-              <label>Phone<input type="tel" name="phone" data-google-entry="entry.1770822543" required /></label>
+              <label>Address<input type="text" name="residence" data-google-entry="entry.790080973" minlength="10" maxlength="180" autocomplete="street-address" required /></label>
+              <label>Phone<input type="tel" name="phone" data-google-entry="entry.1770822543" inputmode="tel" minlength="10" maxlength="20" autocomplete="tel" required /></label>
             </div>
             <div class="form-row">
-              <label>Email<input type="email" name="email" data-google-entry="entry.227649005" required /></label>
-              <label>Instagram<input type="text" name="instagram" data-google-entry="entry.1846923513" /></label>
+              <label>Email<input type="email" name="email" data-google-entry="entry.227649005" maxlength="120" autocomplete="email" required /></label>
+              <label>Instagram<input type="text" name="instagram" data-google-entry="entry.1846923513" maxlength="31" placeholder="@username" /></label>
             </div>
-            <label>Wedding Location<input type="text" name="location" data-google-entry="entry.483377122" required /></label>
-            <label>Wedding Type<input type="text" name="weddingType" data-google-entry="entry.2084989293" required /></label>
+            <label>Wedding Location<input type="text" name="location" data-google-entry="entry.483377122" minlength="2" maxlength="80" required /></label>
+            <label>Wedding Type<input type="text" name="weddingType" data-google-entry="entry.2084989293" minlength="3" maxlength="80" placeholder="e.g. Hindu, Christian, Interfaith" required /></label>
             <label
               >Celebration Style
               <select name="style" data-google-entry="entry.581423695" required>

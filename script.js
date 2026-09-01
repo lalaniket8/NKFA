@@ -365,8 +365,125 @@ async function populatePageContent() {
   const formNote = document.getElementById('form-note');
   const googleFormUrl = form?.dataset.googleFormUrl;
 
+  function isValidWeddingDate(value) {
+    const input = value.trim();
+
+    const monthYear = /^(january|february|march|april|may|june|july|august|september|october|november|december)\s+20\d{2}$/i;
+    if (monthYear.test(input)) {
+      return true;
+    }
+
+    const numericDate = /^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/;
+    const match = input.match(numericDate);
+    if (!match) {
+      return false;
+    }
+
+    const day = Number(match[1]);
+    const month = Number(match[2]);
+    const year = Number(match[3]);
+
+    if (year < 2000 || year > 2100) {
+      return false;
+    }
+
+    const date = new Date(year, month - 1, day);
+    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+  }
+
+  function validateField(field) {
+    const fieldName = field.name;
+    const value = (field.value || '').trim();
+    let message = '';
+
+    if (field.required && value === '') {
+      message = 'This field is required.';
+    }
+
+    if (!message && fieldName === 'brideName') {
+      if (!/^[A-Za-z][A-Za-z .'-]{1,79}$/.test(value)) {
+        message = 'Enter a valid name (letters, spaces, apostrophe, hyphen, dot).';
+      }
+    }
+
+    if (!message && fieldName === 'weddingDate') {
+      if (!isValidWeddingDate(value)) {
+        message = 'Use "December 2026" or "DD/MM/YYYY" format.';
+      }
+    }
+
+    if (!message && fieldName === 'residence') {
+      if (value.length < 10 || value.length > 180 || !/[A-Za-z]/.test(value)) {
+        message = 'Enter a complete address (10-180 characters).';
+      }
+    }
+
+    if (!message && fieldName === 'phone') {
+      const compactPhone = value.replace(/[\s()-]/g, '');
+      if (!/^\+?\d{10,15}$/.test(compactPhone)) {
+        message = 'Enter a valid phone number with 10-15 digits.';
+      }
+    }
+
+    if (!message && fieldName === 'email') {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+        message = 'Enter a valid email address.';
+      }
+    }
+
+    if (!message && fieldName === 'instagram' && value !== '') {
+      if (!/^@?[A-Za-z0-9._]{1,30}$/.test(value)) {
+        message = 'Use a valid Instagram handle (letters, numbers, dot, underscore).';
+      }
+    }
+
+    if (!message && fieldName === 'location') {
+      if (!/^[A-Za-z][A-Za-z .,'-]{1,79}$/.test(value)) {
+        message = 'Enter a valid location using letters and punctuation only.';
+      }
+    }
+
+    if (!message && fieldName === 'weddingType') {
+      if (!/^[A-Za-z][A-Za-z &/,.'-]{2,79}$/.test(value)) {
+        message = 'Enter a valid wedding type (letters and basic punctuation).';
+      }
+    }
+
+    if (!message && field.tagName === 'SELECT' && value === '') {
+      message = 'Please select an option.';
+    }
+
+    field.setCustomValidity(message);
+    return message === '';
+  }
+
+  const validatedFields = form ? Array.from(form.elements).filter((element) => element.matches?.('input, select')) : [];
+
+  validatedFields.forEach((field) => {
+    const eventName = field.tagName === 'SELECT' ? 'change' : 'input';
+    field.addEventListener(eventName, () => {
+      validateField(field);
+    });
+    field.addEventListener('blur', () => {
+      validateField(field);
+    });
+  });
+
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
+
+    let hasInvalidField = false;
+    validatedFields.forEach((field) => {
+      const isValid = validateField(field);
+      if (!isValid) {
+        hasInvalidField = true;
+      }
+    });
+
+    if (hasInvalidField) {
+      form.reportValidity();
+      return;
+    }
 
     if (!form.checkValidity()) {
       form.reportValidity();
