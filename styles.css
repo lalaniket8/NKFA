@@ -233,14 +233,14 @@ textarea {
   justify-content: center;
   align-items: flex-end;
   text-align: right;
-  gap: 0.4rem;
+  gap: 2rem;
   margin-left: auto;
   padding-left: 0;
 }
 
 body[data-page="home"] .hero-copy-stack {
   width: min(100%, 980px);
-  gap: 0.4rem;
+  gap: 2rem;
 }
 
 .eyebrow {
